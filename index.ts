@@ -1,33 +1,40 @@
-// Async
-function hello(nombre: string) {
-    return new Promise((resolve, reject) => {
-        console.log(`Hola ${nombre}`);
-        resolve(nombre);
-    });
-};
+import fs from 'fs';
 
-function talk(nombre: any) {
-    return new Promise((resolve, reject) => {
-        console.log(`Talking`);
-        resolve(nombre);
+function read(dir: string, callback: any) {
+    fs.readFile(dir, (error, data) => {
+        if(!data) {
+            callback(error);
+        } else {
+            callback(data.toString());
+        }
     });
-};
+}
 
-function bye(nombre: any) {
-    return new Promise((resolve, reject) => {
-        console.log(`Bye ${nombre}`);
-        resolve(nombre);
+function write(dir: string, payload: string, callback: any) {
+    fs.writeFile(dir, payload, (error) => {
+        if(error) {
+            callback(error);
+        } else {
+            callback('File created');
+        }
     });
-};
+}
 
-console.log('Init process');
-hello('Nicole')
-    .then(talk)
-    .then(talk)
-    .then(bye)
-    .then(() => {
-        console.log('Finish procces');
-    })
-    .catch((error) => {
-        console.error(error);
-    })
+function deleted(dir: string, callback: any) {
+    fs.unlink(dir, (error) => {
+        if(error) {
+            callback(error);
+        } else {
+            callback('File deleted');
+        }
+    });
+}
+
+// Read file
+read(__dirname + '/file.txt', console.log);
+
+// Write file
+write(__dirname + '/fileWrited.txt', 'File Created', console.log);
+
+// Delete file
+deleted(__dirname + '/fileForDelete.txt', console.log);
