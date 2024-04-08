@@ -6,6 +6,13 @@ function hola(nombre: string, callback: any) {
     }, 1500);
 };
 
+function talk(callback: any) {
+    setTimeout(function () {
+        console.log(`Talking`);
+        callback();
+    });
+};
+
 function bye(nombre: string, callback: any) {
     setTimeout(function () {
         console.log(`Bye ${nombre}`);
@@ -13,9 +20,19 @@ function bye(nombre: string, callback: any) {
     }, 1600);
 };
 
+function conversation(nombre: string, loop: number, callback: any) {
+    if (loop > 0) {
+        talk(function() {
+            conversation(nombre, --loop, callback);
+          });
+    } else {
+        bye(nombre, callback);
+    }
+};
+
 console.log('Init process');
 hola('Nicole', function(nombre: string) {
-    bye(nombre, function() {
+    conversation(nombre, 5, function() {
         console.log('Finish process');
     });
 });
