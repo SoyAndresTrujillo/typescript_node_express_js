@@ -1,40 +1,41 @@
-import fs from 'fs';
+//muestra algo
+console.log("Algo");
 
-function read(dir: string, callback: any) {
-    fs.readFile(dir, (error, data) => {
-        if(!data) {
-            callback(error);
-        } else {
-            callback(data.toString());
-        }
-    });
-}
+//console.info: es equivalente a log pero es usado para informar.
+console.info("Algo");
 
-function write(dir: string, payload: string, callback: any) {
-    fs.writeFile(dir, payload, (error) => {
-        if(error) {
-            callback(error);
-        } else {
-            callback('File created');
-        }
-    });
-}
+//mostrar error en rojo
+console.error("Error");
 
-function deleted(dir: string, callback: any) {
-    fs.unlink(dir, (error) => {
-        if(error) {
-            callback(error);
-        } else {
-            callback('File deleted');
-        }
-    });
-}
+//Advertencias, en amarillo
+console.warn("Algo");
 
-// Read file
-read(__dirname + '/file.txt', console.log);
+//Mostrar datos en tabla
+var tabla = [
+  {
+    a: 1,
+    b: "z",
+  },
+  {
+    a: 2,
+    b: "Otra",
+  },
+];
+console.table(tabla);
 
-// Write file
-write(__dirname + '/fileWrited.txt', 'File Created', console.log);
+//Agrupar varios console.logs
+console.group('Conversación')
+console.log('Hola');
+console.log('blablabla');
+console.log('blablabla');
+console.log('blablabla');
+console.log('Adios');
+console.groupEnd();
 
-// Delete file
-deleted(__dirname + '/fileForDelete.txt', console.log);
+//count inicia contador
+//reset resetea el contador
+console.count('veces');
+console.count('veces');
+console.count('veces');
+console.countReset('veces');
+console.count('veces');
