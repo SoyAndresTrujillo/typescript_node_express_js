@@ -1,41 +1,19 @@
-//muestra algo
-console.log("Algo");
+function result(callback: any) {
+    callback(() => {
+        sum();
+    });
+}
 
-//console.info: es equivalente a log pero es usado para informar.
-console.info("Algo");
+function sum():number {
+    return 5 + z;
+}
 
-//mostrar error en rojo
-console.error("Error");
+try {
+    result(function(error) {
+        console.error(error);
+    });
+} catch(error) {
+    console.error(error);
+}
 
-//Advertencias, en amarillo
-console.warn("Algo");
-
-//Mostrar datos en tabla
-var tabla = [
-  {
-    a: 1,
-    b: "z",
-  },
-  {
-    a: 2,
-    b: "Otra",
-  },
-];
-console.table(tabla);
-
-//Agrupar varios console.logs
-console.group('Conversación')
-console.log('Hola');
-console.log('blablabla');
-console.log('blablabla');
-console.log('blablabla');
-console.log('Adios');
-console.groupEnd();
-
-//count inicia contador
-//reset resetea el contador
-console.count('veces');
-console.count('veces');
-console.count('veces');
-console.countReset('veces');
-console.count('veces');
+// When an function is async, this is pased for other hilo and if this function has error, the app it's creashed
