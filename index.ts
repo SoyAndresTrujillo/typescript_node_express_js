@@ -20,6 +20,7 @@ function bye(nombre: string, callback: any) {
     }, 1600);
 };
 
+// Callback hell
 function conversation(nombre: string, loop: number, callback: any) {
     if (loop > 0) {
         talk(function() {
