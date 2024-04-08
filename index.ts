@@ -1,19 +1,33 @@
-function result(callback: any) {
-    callback(() => {
-        sum();
-    });
-}
+const { spawn } = require("child_process");
+const ls = spawn("ls", ["-l"]); // Ejemplo de ejecución del comando 'ls -l'
 
-function sum():number {
-    return 5 + z;
-}
+ls.stdout.on("data", (data) => {
+  console.log(`Salida estándar: ${data}`);
+});
 
-try {
-    result(function(error) {
-        console.error(error);
-    });
-} catch(error) {
-    console.error(error);
-}
+ls.on("close", (code) => {
+  console.log(`Proceso secundario finalizado con código de salida ${code}`);
+});
 
-// When an function is async, this is pased for other hilo and if this function has error, the app it's creashed
+const { exec } = require("child_process");
+exec("ls -l", (error, stdout, stderr) => {
+  if (error) {
+    console.error(`Error: ${error}`);
+    return;
+  }
+  console.log(`Salida estándar: ${stdout}`);
+});
+
+process.stdin.on("data", (data) => {
+  console.log(`Datos recibidos del proceso secundario: ${data}`);
+});
+
+process.on("exit", (code) => {
+  console.log(
+    `El proceso principal está cerrando con código de salida ${code}`
+  );
+});
+
+if (process.killed) {
+  console.log('El proceso principal ha sido terminado.');
+}
