@@ -1,33 +1,10 @@
-const { spawn } = require("child_process");
-const ls = spawn("ls", ["-l"]); // Ejemplo de ejecución del comando 'ls -l'
+import bcrypt from 'bcrypt';
 
-ls.stdout.on("data", (data) => {
-  console.log(`Salida estándar: ${data}`);
+const password = '12con31traseña09';
+
+bcrypt.hash(password, 10, async function(error: any, hash: any) {
+  console.log(hash);
+
+  const isTrue = await bcrypt.compare(password, hash);
+  console.log(isTrue);
 });
-
-ls.on("close", (code) => {
-  console.log(`Proceso secundario finalizado con código de salida ${code}`);
-});
-
-const { exec } = require("child_process");
-exec("ls -l", (error, stdout, stderr) => {
-  if (error) {
-    console.error(`Error: ${error}`);
-    return;
-  }
-  console.log(`Salida estándar: ${stdout}`);
-});
-
-process.stdin.on("data", (data) => {
-  console.log(`Datos recibidos del proceso secundario: ${data}`);
-});
-
-process.on("exit", (code) => {
-  console.log(
-    `El proceso principal está cerrando con código de salida ${code}`
-  );
-});
-
-if (process.killed) {
-  console.log('El proceso principal ha sido terminado.');
-}
