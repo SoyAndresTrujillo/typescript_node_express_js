@@ -20,6 +20,5 @@ const link = 'https://platzi.com/blog/que-es-platzi-master/';
 
     browser.close()
 
-    
     console.log(commentsText)
 })()
