@@ -1,4 +1,8 @@
-import moment from 'moment';
+const abc = Buffer.alloc(26);
 
-const date = moment().format('YYYY/MM/DD');
-console.log(date);
+for (let i = 0; i < abc.length; i++) {
+  abc[i] = i + 97;
+}
+
+console.log(abc);
+console.log(abc.toString());
