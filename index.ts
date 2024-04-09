@@ -1,22 +1,25 @@
-function asincrona(callback) {
-  setTimeout(() => {
-      try {
-          let a = 3 + w; // TypeScript inmediatamente marca el error, por lo que esta implementación es solo un ejemplo de como seria con js puro
-          callback(null, a)
-      } catch (error) {
-          callback(error)
-      }
-  }, 1000)
-}
+import puppeteer from 'puppeteer';
 
-asincrona((err, dato) => {
-  if (err) {
-      console.error('Tenemos un error')
-      console.error(err)
-      return false
+const link = 'https://platzi.com/blog/que-es-platzi-master/';
 
-      // throw err
-  }
+(async function browser() {
+    console.log('Abrimos chromium')
+    const browser = await puppeteer.launch({headless: false})// lanzamos el navegador
 
-  console.log(`Todo ha ido bien, mi dato es ${dato}`)
-})
+    const page = await browser.newPage()
+    await page.goto(link)
+
+    const commentsText = await page.evaluate(() => {
+        const comments = document.querySelectorAll('.CommentContent-text p')
+        const listOfComments: string[] = []
+        comments.forEach(comment => {
+            listOfComments.push(comment.innerHTML)
+        })
+        return listOfComments
+    })
+
+    browser.close()
+
+    
+    console.log(commentsText)
+})()
