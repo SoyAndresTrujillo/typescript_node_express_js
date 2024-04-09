@@ -1,10 +1,4 @@
-import bcrypt from 'bcrypt';
+import moment from 'moment';
 
-const password = '12con31traseña09';
-
-bcrypt.hash(password, 10, async function(error: any, hash: any) {
-  console.log(hash);
-
-  const isTrue = await bcrypt.compare(password, hash);
-  console.log(isTrue);
-});
+const date = moment().format('YYYY/MM/DD');
+console.log(date);
