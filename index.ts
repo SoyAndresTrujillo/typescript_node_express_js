@@ -1,24 +1,22 @@
-console.time('all')
-
-console.time('sum')
-let sum: number = 0;
-
-for (let index = 0; index < 10000000; index++) {
-  sum++
+function asincrona(callback) {
+  setTimeout(() => {
+      try {
+          let a = 3 + w; // TypeScript inmediatamente marca el error, por lo que esta implementación es solo un ejemplo de como seria con js puro
+          callback(null, a)
+      } catch (error) {
+          callback(error)
+      }
+  }, 1000)
 }
-console.timeEnd('sum')
 
-console.time('async')
-test()
-console.timeEnd('async')
+asincrona((err, dato) => {
+  if (err) {
+      console.error('Tenemos un error')
+      console.error(err)
+      return false
 
-console.timeEnd('all')
+      // throw err
+  }
 
-function test(): Promise<void> {
-  return new Promise<void>((resolve) => {
-    setTimeout(() => {
-      console.log('promise')
-      resolve();
-    }, 10000)
-  })
-}
+  console.log(`Todo ha ido bien, mi dato es ${dato}`)
+})
