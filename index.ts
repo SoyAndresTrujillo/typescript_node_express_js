@@ -1,8 +1,13 @@
-const abc = Buffer.alloc(26);
+const { Transform } = require("stream");
+const { createReadStream } = require("fs");
 
-for (let i = 0; i < abc.length; i++) {
-  abc[i] = i + 97;
-}
+const upperCaseTransform = new Transform({
+  transform(chunk: any, encoding: any, callback: any) {
+    this.push(chunk.toString().toUpperCase());
+    callback();
+  }
+});
 
-console.log(abc);
-console.log(abc.toString());
+const readableStream = createReadStream(__dirname + "/file.txt");
+
+readableStream.pipe(upperCaseTransform).pipe(process.stdout);
